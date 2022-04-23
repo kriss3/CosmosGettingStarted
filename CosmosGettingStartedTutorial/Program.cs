@@ -142,7 +142,7 @@ namespace CosmosGettingStartedTutorial
         private async Task AddItemsToContainerAsync()
         {
             // Create a family object for the Andersen family
-            Family andersenFamily = new Family
+            Family andersenFamily = new()
             {
                 Id = "Andersen.1",
                 LastName = "Andersen",
@@ -160,24 +160,26 @@ namespace CosmosGettingStartedTutorial
                         Grade = 5,
                         Pets = new Pet[]
                         {
-                            new Pet { GivenName = "Fluffy" }
+                            new() { GivenName = "Fluffy" }
                         }
                     }
                 },
-                Address = new Address { State = "WA", County = "King", City = "Seattle" },
+                Address = new() { State = "WA", County = "King", City = "Seattle" },
                 IsRegistered = false
             };
 
             try
             {
                 // Read the item to see if it exists.  
-                ItemResponse<Family> andersenFamilyResponse = await this.container.ReadItemAsync<Family>(andersenFamily.Id, new PartitionKey(andersenFamily.LastName));
+                ItemResponse<Family> andersenFamilyResponse = await this.container
+                    .ReadItemAsync<Family>(andersenFamily.Id, new PartitionKey(andersenFamily.LastName));
                 Console.WriteLine("Item in database with id: {0} already exists\n", andersenFamilyResponse.Resource.Id);
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
             {
                 // Create an item in the container representing the Andersen family. Note we provide the value of the partition key for this item, which is "Andersen"
-                ItemResponse<Family> andersenFamilyResponse = await this.container.CreateItemAsync<Family>(andersenFamily, new PartitionKey(andersenFamily.LastName));
+                ItemResponse<Family> andersenFamilyResponse = await this.container
+                    .CreateItemAsync<Family>(andersenFamily, new PartitionKey(andersenFamily.LastName));
 
                 // Note that after creating the item, we can access the body of the item with the Resource property off the ItemResponse. We can also access the RequestCharge property to see the amount of RUs consumed on this request.
                 Console.WriteLine("Created item in database with id: {0} Operation consumed {1} RUs.\n", andersenFamilyResponse.Resource.Id, andersenFamilyResponse.RequestCharge);
@@ -247,10 +249,11 @@ namespace CosmosGettingStartedTutorial
 
             Console.WriteLine("Running query: {0}\n", sqlQueryText);
 
-            QueryDefinition queryDefinition = new QueryDefinition(sqlQueryText);
-            FeedIterator<Family> queryResultSetIterator = this.container.GetItemQueryIterator<Family>(queryDefinition);
+            QueryDefinition queryDefinition = new(sqlQueryText);
+            FeedIterator<Family> queryResultSetIterator = this.container
+                .GetItemQueryIterator<Family>(queryDefinition);
 
-            List<Family> families = new List<Family>();
+            List<Family> families = new();
 
             while (queryResultSetIterator.HasMoreResults)
             {

@@ -1,10 +1,51 @@
-﻿using System;
+﻿using CosmosDb.App.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CosmosDb.App.Service;
-internal class ItemService
+
+public interface IItemService
 {
+    Task<Item> AddAsync(Item item);
+    Task<Item> UpdateAsync(Item item);
+    Task<Item> DeleteAsync(string id);
+    Task<Item> GetItemAsync(string id);
+    Task<IEnumerable<Item>> GetAllAsync();
+}
+
+public class ItemService : IItemService
+{
+    private readonly ICosmosClient _cosmosClient;
+    public ItemService(ICosmosClient cosmosClient)
+    {
+        _cosmosClient = cosmosClient;
+    }
+
+    public Task<Item> AddAsync(Item item)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Item> DeleteAsync(string id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Item>> GetAllAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Item> GetItemAsync(string id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Item> UpdateAsync(Item item)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Azure.Cosmos;
-using Microsoft.Extension.Configuration;
+using Microsoft.Extensions.Configuration;
 
-namespace CosmosDb.App.CosmosClient;
+namespace CosmosDb.App.MyCosmosClient;
 
 public interface ICosmosClient
 {
@@ -18,14 +18,21 @@ public interface ICosmosClient
     //Task<IEnumerable<T>> GetAllAsync<T>();
 }
 
-public class CosmosClient : ICosmosClient
+public class MyCosmosClient : ICosmosClient
 {
-    private CosmosClient _client;
-    public CosmosClient()
+    private readonly CosmosClient _client;
+
+    public MyCosmosClient()
     {
         _client = new CosmosClient("", "");
     }
 
+    public async Task<T> AddAsync<T>(T item)
+    {
+        var container = _client.GetContainer("database", "container");
+        var response = await container.CreateItemAsync(item);
+        return response.Resource;
+    }
 
 
 }

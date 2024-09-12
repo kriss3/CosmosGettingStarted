@@ -1,4 +1,5 @@
 ﻿using CosmosDb.App.Model;
+using CosmosDb.App.MyCosmosClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ public class ItemService : IItemService
 
     public Task<Item> AddAsync(Item item)
     {
-        throw new NotImplementedException();
+        return _cosmosClient.AddAsync(item);
     }
 
     public Task<Item> DeleteAsync(string id)

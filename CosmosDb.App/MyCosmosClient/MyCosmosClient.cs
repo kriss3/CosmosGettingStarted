@@ -19,12 +19,16 @@ public interface ICosmosClient
 }
 
 public class MyCosmosClient : ICosmosClient
+public class MyCosmosClient : ICosmosClient
 {
     private readonly CosmosClient _client;
+    private readonly IConfigurationBuilder _config;
 
-    public MyCosmosClient()
+
+	public MyCosmosClient(IConfigurationBuilder config)
     {
-        _client = new CosmosClient("", "");
+		_config = config;
+		_client = new CosmosClient(_config.GetValue<string>("") ,  _onGfig.GetSection(""));
     }
 
     public async Task<T> AddAsync<T>(T item)

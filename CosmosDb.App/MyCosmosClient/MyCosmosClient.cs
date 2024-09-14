@@ -19,24 +19,22 @@ public interface ICosmosClient
 }
 
 public class MyCosmosClient : ICosmosClient
-public class MyCosmosClient : ICosmosClient
 {
-    private readonly CosmosClient _client;
-    private readonly IConfigurationBuilder _config;
-
+	private readonly CosmosClient _client;
+	private readonly IConfigurationBuilder _config;
 
 	public MyCosmosClient(IConfigurationBuilder config)
-    {
+	{
 		_config = config;
-		_client = new CosmosClient(_config.GetValue<string>("") ,  _onGfig.GetSection(""));
-    }
+		_client = new CosmosClient(
+			_config.Build().GetValue<string>("CosmosDb:Endpoint"), 
+			_config.Build().GetValue<string>("CosmosDb:Key"));
+	}
 
-    public async Task<T> AddAsync<T>(T item)
-    {
-        var container = _client.GetContainer("database", "container");
-        var response = await container.CreateItemAsync(item);
-        return response.Resource;
-    }
-
-
+	public async Task<T> AddAsync<T>(T item)
+	{
+		var container = _client.GetContainer("database", "container");
+		var response = await container.CreateItemAsync(item);
+		return response.Resource;
+	}
 }

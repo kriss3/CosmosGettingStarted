@@ -38,16 +38,16 @@ class Program
     private Container container;
 
     // The name of the database and container we will create
-    private string databaseId = "db";
-    private string containerId = "items";
+    private readonly string databaseId = "db";
+    private readonly string containerId = "items";
 
     // <Main>
-    public static async Task Main(string[] args)
+    public static async Task Main()
     {
         try
         {
             Console.WriteLine("Beginning operations...\n");
-            Program p = new Program();
+            Program p = new();
             await p.GetStartedDemoAsync();
 
         }
@@ -146,14 +146,14 @@ class Program
         {
             Id = "Andersen.1",
             LastName = "Andersen",
-            Parents = new Parent[]
-            {
-                new Parent { FirstName = "Thomas" },
+            Parents =
+			[
+				new Parent { FirstName = "Thomas" },
                 new Parent { FirstName = "Mary Kay" }
-            },
-            Children = new Child[]
-            {
-                new Child
+            ],
+            Children =
+			[
+				new Child
                 {
                     FirstName = "Henriette Thaulow",
                     Gender = "female",
@@ -163,7 +163,7 @@ class Program
                         new() { GivenName = "Fluffy" }
                     }
                 }
-            },
+            ],
             Address = new() { State = "WA", County = "King", City = "Seattle" },
             IsRegistered = false
         };
@@ -186,15 +186,15 @@ class Program
         }
 
         // Create a family object for the Wakefield family
-        Family wakefieldFamily = new Family
+        Family WakefieldFamily = new Family
         {
             Id = "Wakefield.7",
             LastName = "Wakefield",
-            Parents = new Parent[]
-            {
-                new Parent { FamilyName = "Wakefield", FirstName = "Robin" },
+            Parents =
+			[
+				new Parent { FamilyName = "Wakefield", FirstName = "Robin" },
                 new Parent { FamilyName = "Miller", FirstName = "Ben" }
-            },
+            ],
             Children = new Child[]
             {
                 new Child
@@ -224,13 +224,13 @@ class Program
         try
         {
             // Read the item to see if it exists
-            ItemResponse<Family> wakefieldFamilyResponse = await this.container.ReadItemAsync<Family>(wakefieldFamily.Id, new PartitionKey(wakefieldFamily.LastName));
+            ItemResponse<Family> wakefieldFamilyResponse = await this.container.ReadItemAsync<Family>(WakefieldFamily.Id, new PartitionKey(WakefieldFamily.LastName));
             Console.WriteLine("Item in database with id: {0} already exists\n", wakefieldFamilyResponse.Resource.Id);
         }
         catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
         {
             // Create an item in the container representing the Wakefield family. Note we provide the value of the partition key for this item, which is "Wakefield"
-            ItemResponse<Family> wakefieldFamilyResponse = await this.container.CreateItemAsync<Family>(wakefieldFamily, new PartitionKey(wakefieldFamily.LastName));
+            ItemResponse<Family> wakefieldFamilyResponse = await this.container.CreateItemAsync<Family>(WakefieldFamily, new PartitionKey(WakefieldFamily.LastName));
 
             // Note that after creating the item, we can access the body of the item with the Resource property off the ItemResponse. We can also access the RequestCharge property to see the amount of RUs consumed on this request.
             Console.WriteLine("Created item in database with id: {0} Operation consumed {1} RUs.\n", wakefieldFamilyResponse.Resource.Id, wakefieldFamilyResponse.RequestCharge);

@@ -195,9 +195,9 @@ class Program
 				new Parent { FamilyName = "Wakefield", FirstName = "Robin" },
                 new Parent { FamilyName = "Miller", FirstName = "Ben" }
             ],
-            Children = new Child[]
-            {
-                new Child
+            Children =
+			[
+				new Child
                 {
                     FamilyName = "Merriam",
                     FirstName = "Jesse",
@@ -216,7 +216,7 @@ class Program
                     Gender = "female",
                     Grade = 1
                 }
-            },
+            ],
             Address = new Address { State = "NY", County = "Manhattan", City = "NY" },
             IsRegistered = true
         };

@@ -45,3 +45,5 @@ The code included in this sample is intended to get you quickly started with a .
 - [Azure Cosmos DB Documentation](https://docs.microsoft.com/azure/cosmos-db/index)
 - [Azure Cosmos DB .NET SDK for SQL API](https://docs.microsoft.com/azure/cosmos-db/sql-api-sdk-dotnet)
 - [Azure Cosmos DB .NET SDK Reference Documentation](https://docs.microsoft.com/dotnet/api/overview/azure/cosmosdb?view=azure-dotnet)
+
+- This solution has two projects. Initial learning activity with CosmosDb and the second one based in n Tim Corey YT intro to cosmosDb. Learning if NoSql continues  

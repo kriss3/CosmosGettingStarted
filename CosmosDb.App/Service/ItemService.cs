@@ -47,6 +47,6 @@ public class ItemService : IItemService
 
     public Task<Item> UpdateAsync(Item item)
     {
-        throw new NotImplementedException();
-    }
+		return _cosmosClient.UpdateAsync(item);
+	}
 }

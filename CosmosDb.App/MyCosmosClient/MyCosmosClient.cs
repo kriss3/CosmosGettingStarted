@@ -51,4 +51,9 @@ public class MyCosmosClient : ICosmosClient
 			return default!;
 		}
 	}
+
+	public Task<T> UpdateAsync<T>(T item)
+	{
+		throw new NotImplementedException();
+	}
 }

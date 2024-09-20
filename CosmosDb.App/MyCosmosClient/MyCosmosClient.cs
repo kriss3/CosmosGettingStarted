@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CosmosDb.App.Model;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;
 
@@ -38,8 +38,17 @@ public class MyCosmosClient : ICosmosClient
 		return response.Resource;
 	}
 
-	public Task<T> GetItemAsync<T>(string id)
+	public async Task<T> GetItemAsync<T>(string id)
 	{
-		throw new NotImplementedException();
+		try
+		{
+			var container = _client.GetContainer("database", "container");
+			var response = await container.ReadItemAsync<T>(id, new PartitionKey(id));
+			return response.Resource;
+		}
+		catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+		{
+			return default!;
+		}
 	}
 }

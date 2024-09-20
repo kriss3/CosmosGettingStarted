@@ -15,7 +15,7 @@ public interface ICosmosClient
     Task<T> UpdateAsync<T>(T item);
     //Task<T> DeleteAsync<T>(string id);
     Task<T> GetItemAsync<T>(string id);
-    //Task<IEnumerable<T>> GetAllAsync<T>();
+    Task<IEnumerable<T>> GetAllAsync<T>();
 }
 
 public class MyCosmosClient : ICosmosClient
@@ -36,6 +36,11 @@ public class MyCosmosClient : ICosmosClient
 		var container = _client.GetContainer("database", "container");
 		var response = await container.CreateItemAsync(item);
 		return response.Resource;
+	}
+
+	public Task<IEnumerable<T>> GetAllAsync<T>()
+	{
+		throw new NotImplementedException();
 	}
 
 	public async Task<T> GetItemAsync<T>(string id)

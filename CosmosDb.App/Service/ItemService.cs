@@ -37,8 +37,8 @@ public class ItemService : IItemService
 
     public Task<IEnumerable<Item>> GetAllAsync()
     {
-        throw new NotImplementedException();
-    }
+        return _cosmosClient.GetAllAsync<Item>();
+	}
 
     public Task<Item> GetItemAsync(string id)
     {
